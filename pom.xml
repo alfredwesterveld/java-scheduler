@@ -80,11 +80,45 @@
         </dependency>
     </dependencies>
 
+        
+    <pluginRepositories>        
+        <pluginRepository>            
+            <id>scala-tools.org</id>            
+            <name>Scala-Tools Maven2 Repository</name>            
+            <url>http://scala-tools.org/repo-releases</url>        
+        </pluginRepository>        
+        <pluginRepository>            
+            <id>maven2-repository.dev.java.net</id>            
+            <name>Java.net Repository for Maven</name>            
+            <url>http://download.java.net/maven/2/</url>            
+            <layout>default</layout>        
+        </pluginRepository>    
+    </pluginRepositories>
+    <distributionManagement>        
+        <repository>            
+            <id>sonatype-nexus-staging</id>            
+            <name>Sonatype Release</name>            
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>        
+        </repository>        
+        <snapshotRepository>            
+            <id>sonatype-nexus-snapshots</id>            
+            <name>sonatype-nexus-snapshots</name>            
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>        
+        </snapshotRepository>    
+    </distributionManagement>
     <repositories>
-        <repository>
-            <id>oss.sonatype.org</id>
-            <url>http://oss.sonatype.org/service/local/repositories/snapshots/content</url>
+
+       
+        <repository>            
+            <id>oss.sonatype.org</id>            
+            <url>http://oss.sonatype.org/content/repositories/releases</url>        
+        </repository>        
+        <repository>            
+            <id>oss.sonatype.org-snapshot</id>            
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>        
         </repository>
+
     </repositories>
+
 
 </project>
