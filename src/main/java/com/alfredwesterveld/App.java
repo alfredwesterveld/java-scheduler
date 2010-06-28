@@ -24,7 +24,6 @@ public class App {
     private static final ExecutorService st =
         Executors.newCachedThreadPool();
 
-    
     public static void main(String[] args) throws Exception {
         String host = setupHost(args);
         String resourcesPackage = com.alfredwesterveld.scheduler.httpserver.SchedulerHttpServer.class.getPackage().getName();
