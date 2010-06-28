@@ -6,33 +6,29 @@
 package com.alfredwesterveld.scheduler;
 
 import com.alfredwesterveld.App;
-import java.io.IOException;
+import com.alfredwesterveld.httpclient.MultiThreadedHttpClient;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  *
  * @author alfred
  */
 public class TaskRunner {
-    private static final Scheduler<URLFetcher> scheduler = App.getScheduler();
+    private static final Scheduler<String> scheduler = App.getScheduler();
+    private final ExecutorService tp = Executors.newCachedThreadPool();
+    private final MultiThreadedHttpClient client =
+        new MultiThreadedHttpClient();
     
-    private TaskRunner() {
+    public TaskRunner() {
     }
 
-    public static void run() throws Exception {
-        _run();
-    }
-
-    private static void _run() {
-         while (true) {
-            try {
-                final Task<URLFetcher> task = scheduler.execute();
-                final URLFetcher urlf = task.getJob();
-                final String url = urlf.getURL();
-                urlf.fetch();
-            } catch(InterruptedException ex) {
-                break;
-            } catch(IOException io) {
-            }
+    public void run() throws Exception {
+        client.start();
+        while (true) {
+            final Task<String> task = scheduler.run();
+            String job = task.getJob();
+            client.get(job);
         }
     }
 }

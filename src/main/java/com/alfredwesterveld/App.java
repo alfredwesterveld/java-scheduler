@@ -2,13 +2,8 @@ package com.alfredwesterveld;
 
 import com.alfredwesterveld.scheduler.Scheduler;
 import com.alfredwesterveld.scheduler.TaskRunner;
-import com.alfredwesterveld.scheduler.URLFetcher;
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.atmosphere.grizzly.AtmosphereSpadeServer;
 
 /**
@@ -24,36 +19,20 @@ public class App {
     /**
      * Setup scheduler.
      */
-    private static Scheduler<URLFetcher> SCHEDULER;
+    private static Scheduler<String> SCHEDULER;
 
     private static final ExecutorService st =
         Executors.newCachedThreadPool();
 
-    static Logger logger = Logger.getRootLogger();
-
-    private static void setupLogger() {
-         BasicConfigurator.configure();
-         logger.setLevel(Level.OFF);
-    }
     
     public static void main(String[] args) throws Exception {
-        setupLogger();
-        st.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TaskRunner.run();
-                } catch(Exception io) {
-
-                }
-            }
-        });
         String host = setupHost(args);
-        String resourcesPackage = com.alfredwesterveld.scheduler.
-            http.SchedulerHttpServer.class.getPackage().getName();
+        String resourcesPackage = com.alfredwesterveld.scheduler.httpserver.SchedulerHttpServer.class.getPackage().getName();
         AtmosphereSpadeServer server = AtmosphereSpadeServer.build(host,
             resourcesPackage);
         server.start();
+        final TaskRunner taskRunner = new TaskRunner();
+        taskRunner.run();
     }
 
     public static String setupHost(String[] args) {
@@ -63,9 +42,9 @@ public class App {
         return HOST;
     }
 
-    public static Scheduler<URLFetcher> getScheduler() {
+    public static Scheduler<String> getScheduler() {
          if (SCHEDULER == null) {
-            App.SCHEDULER = new Scheduler<URLFetcher>();
+            App.SCHEDULER = new Scheduler<String>();
         }
         return SCHEDULER;
     }

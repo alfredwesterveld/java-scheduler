@@ -30,7 +30,7 @@ public class Scheduler<E> {
         return delayedJobQueue.peek();
     }
 
-    public Task<E> execute() throws InterruptedException {
+    public Task<E> run() throws InterruptedException {
         try {
             return delayedJobQueue.take();
         } finally {
