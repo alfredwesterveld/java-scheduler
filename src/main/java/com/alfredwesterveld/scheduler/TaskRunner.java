@@ -28,7 +28,8 @@ public class TaskRunner {
         while (true) {
             final Task<String> task = scheduler.run();
             String job = task.getJob();
-            client.get(job);
+            System.out.println("job = " + job);
+            client.get(job, task.getCount());
         }
     }
 }

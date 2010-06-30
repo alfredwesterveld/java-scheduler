@@ -7,20 +7,29 @@ package com.alfredwesterveld.scheduler;
 
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
+ * @param <E> 
  * @author alfred
  */
 public class Task<E> implements Delayed {
 
     private final long scheduleMillis;
     private final E e;
+    private final int count;
 
-    public Task(E e, long executeMillis) {
-        this.e = e;
-        this.scheduleMillis = executeMillis;
+    public Task(final E e, long scheduleMillis) {
+        this(e,scheduleMillis,0);
     }
+
+    public Task(final E e, final long scheduleMillis, final int count) {
+        this.e = e;
+        this.scheduleMillis = scheduleMillis;
+        this.count = count;
+    }
+
 
     @Override
     public long getDelay(TimeUnit tu) {
@@ -34,6 +43,10 @@ public class Task<E> implements Delayed {
         long otherDelay = t.getDelay(TimeUnit.MILLISECONDS);
         return  (thisDelay < otherDelay) ? -1 :
                 (thisDelay > otherDelay) ? 1 : 0;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public E getJob() {

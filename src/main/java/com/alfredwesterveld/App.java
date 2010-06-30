@@ -19,14 +19,14 @@ public class App {
     /**
      * Setup scheduler.
      */
-    private static Scheduler<String> SCHEDULER;
+    private static final Scheduler<String> SCHEDULER = new Scheduler<String>();
 
     private static final ExecutorService st =
         Executors.newCachedThreadPool();
 
     public static void main(String[] args) throws Exception {
         String host = setupHost(args);
-        String resourcesPackage = com.alfredwesterveld.scheduler.httpserver.SchedulerHttpServer.class.getPackage().getName();
+        String resourcesPackage = com.alfredwesterveld.scheduler.webserver.SchedulerHttpServer.class.getPackage().getName();
         AtmosphereSpadeServer server = AtmosphereSpadeServer.build(host,
             resourcesPackage);
         server.start();
@@ -42,9 +42,6 @@ public class App {
     }
 
     public static Scheduler<String> getScheduler() {
-         if (SCHEDULER == null) {
-            App.SCHEDULER = new Scheduler<String>();
-        }
         return SCHEDULER;
     }
 }

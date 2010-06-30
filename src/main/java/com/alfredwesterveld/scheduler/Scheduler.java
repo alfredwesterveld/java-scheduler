@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
+ * @param <E> 
  * @author alfred
  */
 public class Scheduler<E> {
